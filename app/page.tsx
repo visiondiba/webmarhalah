@@ -1,22 +1,19 @@
 'use client'
-import Image from "next/image";
+
 import * as React from "react";
 import Box from "@/components/Box";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import ImageFrame from "@/components/ImageFrame";
-import AboutCarousel from "@/components/AboutCarousel";
-import PhilosophySection from "@/components/gsapdemo";
+import LambangFilosofi from "@/components/FilosofiLambang";
 
 
 export default function Home() {
   return (
     <>
-   <Box as="section" id="" className="w-full min-h-screen">
+   <Box as="section" id="" className="w-full min-h-screen px-12">
     <Box className="flex flex-col w-full min-h-screen items-center justify-center gap-2 md:gap-4">
       <img src="https://placehold.co/256" alt="Lambang." className="py-12" />
       <h1 className="text-center font-bold text-2xl md:text-4xl uppercase tracking-widest" >Name Generation</h1>
-      <p className="text-center font-normal text-xl md:text-2xl md:leading-4">The first gen, the second decade of Gontor.</p>
+      <p className="text-center font-normal text-xl md:text-2xl md:leading-4">The first generation of Gontor’s second decade.</p>
       <Button size={"lg"} variant={"default"} className="rounded-full">
         Klik disini!
         </Button>
@@ -35,7 +32,7 @@ export default function Home() {
         Maecenas vulputate neque et enim sodales consectetur. 
         Etiam vel enim sit amet tellus posuere auctor.
       </p>
-        <PhilosophySection/>
+        <LambangFilosofi/>
     </Box>
    </Box>
    </>
