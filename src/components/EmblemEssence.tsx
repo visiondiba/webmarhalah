@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import data from "@/content/lambang.json"
+import { Button } from "./ui/button"
 
 export default function EmblemEssence() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -83,13 +84,13 @@ export default function EmblemEssence() {
       <Box className="hidden md:flex flex-col bg-zinc-50">
         <div ref={sectionRefPC} className="w-full h-screen flex flex-col">
 
-          {/* Header */}
-          <div className="flex flex-col gap-2 px-20 pt-12 pb-6 shrink-0 border-b border-zinc-200">
+          {/* Header */}  
+          <div className="flex flex-col gap-2 px-12 py-12 shrink-0 border-b border-zinc-200">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-400">
               Identitas Visual
             </p>
             <h1 className="text-5xl font-bold tracking-tight text-zinc-900">
-              The Emblem Essence
+              The Emblem Essence.
             </h1>
           </div>
 
@@ -99,21 +100,17 @@ export default function EmblemEssence() {
             {/* Sidebar */}
             <div className="flex flex-col w-64 border-r border-zinc-200 py-10 px-6 gap-1 justify-center shrink-0">
               {data.map((item, index) => (
-                <button
+                <Button
                   key={item.title}
-                  onClick={() => {
-                    const totalScroll = (data.length - 1) * window.innerHeight;
-                    const targetY = (sectionRefPC.current?.offsetTop ?? 0) + (index / Math.max(data.length - 1, 1)) * totalScroll;
-                    window.scrollTo({ top: targetY, behavior: "smooth" });
-                  }}
-                  className={`text-left px-4 py-3 rounded-lg transition-all duration-200 font-semibold uppercase tracking-wide text-sm ${
+                  
+                  className={`text-left px-4 py-3 rounded-lg transition-all duration-200 font-semibold uppercase tracking-wide text-sm pointer-events-none ${
                     activeIndex === index
                       ? "bg-zinc-900 text-white"
                       : "text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100"
                   }`}
                 >
                   {item.title}
-                </button>
+                </Button>
               ))}
 
               {/* Progress bar */}
