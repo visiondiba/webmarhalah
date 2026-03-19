@@ -1,0 +1,33 @@
+{
+  "section": {
+    "eyebrow": "Tentang Marhalah",
+    "title": "Generation",
+    "titleAccent": "Overview.",
+    "image": "/assets/images/overview.jpg",
+    "imageCaption": "Pondok Modern Darussalam Gontor",
+    "imageSubtitle": "Generasi Pertama Dekade Kedua."
+  },
+  "cards": [
+    {
+      "number": "01",
+      "label": "Identitas",
+      "tag": "Identity",
+      "accent": "#B8873A",
+      "body": "Generasi yang diharapkan bukan hanya cerdas secara intelektual, tetapi mampu menjadikan ilmu sebagai cahaya yang menerangi setiap sisi kehidupannya."
+    },
+    {
+      "number": "02",
+      "label": "Slogan",
+      "tag": "Slogan",
+      "accent": "#C53A24",
+      "body": "Slogan placeholder — isi dengan slogan resmi generasi ini yang mencerminkan semangat dan arah perjuangan ke depan."
+    },
+    {
+      "number": "03",
+      "label": "Moto",
+      "tag": "Motto",
+      "accent": "#5A2C18",
+      "body": "Moto placeholder — isi dengan moto resmi yang menjadi pegangan hidup dan prinsip utama generasi ini."
+    }
+  ]
+}

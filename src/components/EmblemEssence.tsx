@@ -1,21 +1,31 @@
-"use client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import Box from "@/components/Box"
+// src/components/EmblemEssence.tsx
+"use client";
+
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import Box from "@/components/Box";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import data from "@/content/lambang.json"
-import { Button } from "./ui/button"
+import { motion, AnimatePresence, cubicBezier } from "framer-motion";
+import data from "@/content/lambang.json";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const ease = cubicBezier(0.22, 1, 0.36, 1);
+
+const ACCENTS = ["#D9B26A", "#E25930", "#F7E6B5", "#D9B26A", "#E25930"];
+const BG = "#5A2C18";
+const LIGHT = "#F7E6B5";
 
 export default function EmblemEssence() {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRefPC = useRef<HTMLDivElement>(null);
   const sectionRefMobile = useRef<HTMLDivElement>(null);
 
-  // Auto interval untuk mobile
+  const accent = ACCENTS[activeIndex % ACCENTS.length];
+  const item = data[activeIndex];
+
   useEffect(() => {
     const mm = gsap.matchMedia();
     let interval: ReturnType<typeof setInterval> | null = null;
@@ -30,10 +40,7 @@ export default function EmblemEssence() {
     return () => mm.revert();
   }, []);
 
-  // ScrollTrigger pin
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     const ctx = gsap.context(() => {
       ScrollTrigger.matchMedia({
         "(min-width: 768px)": () => {
@@ -69,192 +76,369 @@ export default function EmblemEssence() {
           });
         },
       });
-
       ScrollTrigger.refresh();
     });
 
     return () => ctx.revert();
   }, []);
 
-  const item = data[activeIndex];
+  // RPG ring configs
+  const rings = [
+    { size: 760, duration: 32, reverse: false, dash: "4 8",  opacity: 0.15, thick: 1   },
+    { size: 680, duration: 20, reverse: true,  dash: "2 12", opacity: 0.25, thick: 1.5 },
+    { size: 600, duration: 14, reverse: false, dash: "8 4",  opacity: 0.2,  thick: 1   },
+    { size: 520, duration: 10, reverse: true,  dash: "1 6",  opacity: 0.35, thick: 2   },
+    { size: 440, duration: 7,  reverse: false, dash: "6 3",  opacity: 0.2,  thick: 1   },
+  ];
+
+  const mobileRings = [
+    { size: 280, duration: 28, reverse: false, dash: "4 8",  opacity: 0.15, thick: 1   },
+    { size: 240, duration: 18, reverse: true,  dash: "2 12", opacity: 0.25, thick: 1.5 },
+    { size: 200, duration: 12, reverse: false, dash: "8 4",  opacity: 0.2,  thick: 1   },
+    { size: 160, duration: 8,  reverse: true,  dash: "1 6",  opacity: 0.35, thick: 2   },
+  ];
+
+  const RingSystem = ({ rings: ringList, accent }: { rings: typeof rings; accent: string }) => (
+    <>
+      {/* Ambient glow layers */}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        animate={{ background: `${accent}18`, scale: [1, 1.08, 1] }}
+        transition={{ background: { duration: 0.8 }, scale: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
+        style={{ width: ringList[0].size * 0.6, height: ringList[0].size * 0.6, filter: "blur(60px)" }}
+      />
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        animate={{ background: `${accent}08` }}
+        style={{ width: ringList[0].size * 0.9, height: ringList[0].size * 0.9, filter: "blur(100px)" }}
+      />
+
+      {/* SVG rings */}
+      {ringList.map((ring, i) => (
+        <motion.div
+          key={i}
+          className="absolute pointer-events-none"
+          style={{ width: ring.size, height: ring.size }}
+          animate={{ rotate: ring.reverse ? -360 : 360 }}
+          transition={{ duration: ring.duration, repeat: Infinity, ease: "linear" }}
+        >
+          <svg width={ring.size} height={ring.size} viewBox={`0 0 ${ring.size} ${ring.size}`}>
+            <circle
+              cx={ring.size / 2}
+              cy={ring.size / 2}
+              r={ring.size / 2 - 2}
+              fill="none"
+              stroke={accent}
+              strokeWidth={ring.thick}
+              strokeDasharray={ring.dash}
+              strokeOpacity={ring.opacity}
+            />
+            {/* RPG rune dots at cardinal points */}
+            {i % 2 === 0 && [0, 90, 180, 270].map((deg) => {
+              const rad = (deg * Math.PI) / 180;
+              const cx = ring.size / 2 + (ring.size / 2 - 6) * Math.cos(rad);
+              const cy = ring.size / 2 + (ring.size / 2 - 6) * Math.sin(rad);
+              return (
+                <circle
+                  key={deg}
+                  cx={cx}
+                  cy={cy}
+                  r={2.5}
+                  fill={accent}
+                  fillOpacity={ring.opacity * 2}
+                />
+              );
+            })}
+            {/* RPG rune marks at 45deg points */}
+            {i % 2 === 1 && [45, 135, 225, 315].map((deg) => {
+              const rad = (deg * Math.PI) / 180;
+              const cx = ring.size / 2 + (ring.size / 2 - 6) * Math.cos(rad);
+              const cy = ring.size / 2 + (ring.size / 2 - 6) * Math.sin(rad);
+              return (
+                <rect
+                  key={deg}
+                  x={cx - 2}
+                  y={cy - 2}
+                  width={4}
+                  height={4}
+                  fill={accent}
+                  fillOpacity={ring.opacity * 2}
+                  transform={`rotate(45, ${cx}, ${cy})`}
+                />
+              );
+            })}
+          </svg>
+        </motion.div>
+      ))}
+
+      {/* Pulse ring */}
+      <motion.div
+        className="absolute rounded-full border pointer-events-none"
+        animate={{
+          scale: [1, 1.15, 1],
+          opacity: [0.3, 0, 0.3],
+          borderColor: accent,
+        }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        style={{ width: ringList[2].size, height: ringList[2].size, borderWidth: 1 }}
+      />
+    </>
+  );
 
   return (
     <>
-      {/* ========== PC ========== */}
-      <Box className="hidden md:flex flex-col bg-zinc-50">
-        <div ref={sectionRefPC} className="w-full h-screen flex flex-col">
+      {/* ── DESKTOP ── */}
+      <Box className="hidden md:flex flex-col" style={{ background: BG }}>
+        <div ref={sectionRefPC} className="w-full h-screen flex flex-col overflow-hidden">
 
-          {/* Header */}  
-          <div className="flex flex-col gap-2 px-12 py-12 shrink-0 border-b border-zinc-200">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-400">
-              Identitas Visual
-            </p>
-            <h1 className="text-5xl font-bold tracking-tight text-zinc-900">
-              The Emblem Essence.
-            </h1>
-          </div>
+          {/* Top accent bar */}
+          <motion.div
+            className="h-1 w-full shrink-0"
+            animate={{ background: accent }}
+            transition={{ duration: 0.6 }}
+          />
 
-          {/* Main */}
-          <div className="flex flex-1 overflow-hidden">
-
-            {/* Sidebar */}
-            <div className="flex flex-col w-64 border-r border-zinc-200 py-10 px-6 gap-1 justify-center shrink-0">
-              {data.map((item, index) => (
-                <Button
-                  key={item.title}
-                  
-                  className={`text-left px-4 py-3 rounded-lg transition-all duration-200 font-semibold uppercase tracking-wide text-sm pointer-events-none ${
-                    activeIndex === index
-                      ? "bg-zinc-900 text-white"
-                      : "text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100"
-                  }`}
-                >
-                  {item.title}
-                </Button>
-              ))}
-
-              {/* Progress bar */}
-              <div className="mt-8 px-4">
-                <div className="w-full h-[2px] bg-zinc-200 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-zinc-900 rounded-full"
-                    animate={{ width: `${((activeIndex + 1) / data.length) * 100}%` }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  />
-                </div>
-                <p className="text-xs text-zinc-400 mt-2">
-                  {activeIndex + 1} / {data.length}
-                </p>
-              </div>
+          {/* Header */}
+          <div className="flex items-center justify-between px-16 py-5 shrink-0">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.35em]" style={{ color: `${LIGHT}60` }}>
+                Identitas Visual
+              </p>
+              <h1 className="text-2xl font-semibold tracking-tight leading-none mt-0.5" style={{ color: LIGHT }}>
+                The Emblem Essence.
+              </h1>
             </div>
 
-            {/* Card */}
-            <div className="flex-1 flex items-center justify-center px-16">
+            <div className="flex items-center gap-6">
+              {data.map((d, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <motion.div
+                    className="rounded-full"
+                    animate={{
+                      width: activeIndex === i ? 24 : 6,
+                      height: 6,
+                      background: activeIndex === i ? ACCENTS[i % ACCENTS.length] : `${LIGHT}20`,
+                    }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                  />
+                  <motion.span
+                    className="text-xs uppercase tracking-widest"
+                    animate={{ color: activeIndex === i ? ACCENTS[i % ACCENTS.length] : `${LIGHT}40` }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {d.title}
+                  </motion.span>
+                </div>
+              ))}
+            </div>
+
+            <span className="text-xs tabular-nums" style={{ color: `${LIGHT}30` }}>
+              {String(activeIndex + 1).padStart(2, "0")} / {String(data.length).padStart(2, "0")}
+            </span>
+          </div>
+
+          <Separator style={{ background: `${LIGHT}10` }} />
+
+          {/* Main showcase */}
+          <div className="flex flex-1 overflow-hidden">
+
+            {/* Left — meta info */}
+            <div className="flex flex-col justify-center w-72 px-16 shrink-0 gap-6">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -24 }}
-                  transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="w-full max-w-4xl"
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 16 }}
+                  transition={{ duration: 0.4, ease }}
+                  className="flex flex-col gap-4"
                 >
-                  <Card className="w-full flex flex-row items-center gap-10 p-10 border-zinc-200 shadow-sm bg-white">
-                    <div className="shrink-0 w-52 h-52 rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 flex items-center justify-center">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-contain p-4"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-4 flex-1">
-                      <Badge variant="outline" className="w-fit text-zinc-500 border-zinc-300 uppercase tracking-widest text-xs">
-                        Filosofi Lambang
-                      </Badge>
-                      <CardHeader className="p-0">
-                        <CardTitle className="text-3xl font-bold uppercase tracking-tight text-zinc-900">
-                          {item.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <Separator className="bg-zinc-200" />
-                      <CardContent className="p-0 text-zinc-500 text-base leading-relaxed">
-                        {item.desc}
-                      </CardContent>
-                    </div>
-                  </Card>
+                  <Badge
+                    variant="outline"
+                    className="w-fit uppercase tracking-widest text-xs"
+                    style={{ borderColor: `${accent}50`, color: accent, background: `${accent}12` }}
+                  >
+                    Filosofi Lambang
+                  </Badge>
+
+                  <div>
+                    <span
+                      className="text-6xl font-black leading-none select-none tabular-nums"
+                      style={{ color: LIGHT, opacity: 0.08 }}
+                    >
+                      {String(activeIndex + 1).padStart(2, "0")}
+                    </span>
+                    <h2
+                      className="text-3xl font-semibold uppercase tracking-widest leading-none -mt-2"
+                      style={{ color: LIGHT }}
+                    >
+                      {item.title}
+                    </h2>
+                  </div>
+
+                  <div className="h-px w-12" style={{ background: `${accent}50` }} />
+
+                  <p className="text-sm leading-relaxed" style={{ color: `${LIGHT}60` }}>
+                    {item.desc}
+                  </p>
                 </motion.div>
               </AnimatePresence>
             </div>
 
+            {/* Center — RPG ring showcase */}
+            <div className="flex-1 flex items-center justify-center relative">
+              <RingSystem rings={rings} accent={accent} />
+
+              {/* Image */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, scale: 0.88 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.08 }}
+                  transition={{ duration: 0.5, ease }}
+                  className="relative z-10 flex items-center justify-center"
+                  style={{ width: 512, height: 512 }}
+                >
+                  <motion.img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-contain"
+                    animate={{ scale: [1, 1.03, 1] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ filter: `drop-shadow(0 0 32px ${accent}60) drop-shadow(0 0 80px ${accent}25)` }}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right — vertical dots */}
+            <div className="flex flex-col items-center justify-center w-24 shrink-0 gap-4">
+              {data.map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="rounded-full cursor-default"
+                  animate={{
+                    width: 4,
+                    height: activeIndex === i ? 32 : 8,
+                    background: activeIndex === i ? accent : `${LIGHT}20`,
+                  }}
+                  transition={{ duration: 0.35 }}
+                />
+              ))}
+              <div className="h-px w-4 mt-4" style={{ background: `${LIGHT}10` }} />
+              <span className="text-xs tabular-nums" style={{ color: `${LIGHT}25`, writingMode: "vertical-rl" }}>
+                {String(activeIndex + 1).padStart(2, "0")}
+              </span>
+            </div>
           </div>
 
           {/* Scroll hint */}
-          <div className="flex justify-center pb-6 shrink-0">
+          <div className="flex justify-center py-5 shrink-0">
             <motion.p
               animate={{ opacity: activeIndex === data.length - 1 ? 0 : 1 }}
               transition={{ duration: 0.3 }}
-              className="text-xs text-zinc-400 uppercase tracking-widest"
+              className="text-xs uppercase tracking-widest"
+              style={{ color: `${LIGHT}35` }}
             >
               Scroll untuk lanjut ↓
             </motion.p>
           </div>
-
         </div>
       </Box>
 
-      {/* ========== MOBILE ========== */}
-      <div ref={sectionRefMobile} className="flex md:hidden flex-col h-screen bg-zinc-50">
+      {/* ── MOBILE ── */}
+      <div
+        ref={sectionRefMobile}
+        className="flex md:hidden flex-col h-screen overflow-hidden"
+        style={{ background: BG }}
+      >
+        <motion.div
+          className="h-1 w-full shrink-0"
+          animate={{ background: accent }}
+          transition={{ duration: 0.6 }}
+        />
 
-        {/* Header */}
-        <div className="flex flex-col gap-1 px-6 pt-10 pb-4 shrink-0 border-b border-zinc-200">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-400">
+        <div className="px-6 pt-8 pb-4 shrink-0 border-b" style={{ borderColor: `${LIGHT}10` }}>
+          <p className="text-xs font-medium uppercase tracking-[0.35em] mb-1" style={{ color: `${LIGHT}50` }}>
             Identitas Visual
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900">
-            The Emblem Essence
+          <h1 className="text-2xl font-semibold tracking-tight" style={{ color: LIGHT }}>
+            The Emblem Essence.
           </h1>
         </div>
 
-        {/* Card */}
-        <div className="flex-1 flex items-center justify-center px-6 py-6">
+        <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
+
+          {/* Mobile RPG rings */}
+          <div className="relative flex items-center justify-center">
+            <RingSystem rings={mobileRings} accent={accent} />
+
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={activeIndex}
+                src={item.image}
+                alt={item.title}
+                initial={{ opacity: 0, scale: 0.88 }}
+                animate={{ opacity: 1, scale: [1, 1, 1.03, 1] }}
+                exit={{ opacity: 0, scale: 1.08 }}
+                transition={{ duration: 0.45, ease, scale: { duration: 4, repeat: Infinity } }}
+                className="relative z-10 w-28 h-28 object-contain"
+                style={{ filter: `drop-shadow(0 0 20px ${accent}60) drop-shadow(0 0 50px ${accent}25)` }}
+              />
+            </AnimatePresence>
+          </div>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -24 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="w-full"
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35, ease }}
+              className="flex flex-col items-center gap-3 text-center"
             >
-              <Card className="w-full flex flex-col items-center gap-6 p-6 border-zinc-200 shadow-sm bg-white">
-                <div className="w-40 h-40 rounded-xl overflow-hidden bg-zinc-100 border border-zinc-200 flex items-center justify-center">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-contain p-3"
-                  />
-                </div>
-                <div className="flex flex-col gap-3 w-full">
-                  <Badge variant="outline" className="w-fit text-zinc-500 border-zinc-300 uppercase tracking-widest text-xs">
-                    Filosofi Lambang
-                  </Badge>
-                  <CardHeader className="p-0">
-                    <CardTitle className="text-2xl font-bold uppercase tracking-tight text-zinc-900">
-                      {item.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <Separator className="bg-zinc-200" />
-                  <CardContent className="p-0 text-zinc-500 text-sm leading-relaxed">
-                    {item.desc}
-                  </CardContent>
-                </div>
-              </Card>
+              <Badge
+                variant="outline"
+                className="uppercase tracking-widest text-xs"
+                style={{ borderColor: `${accent}50`, color: accent, background: `${accent}12` }}
+              >
+                Filosofi Lambang
+              </Badge>
+              <h2 className="text-2xl font-semibold uppercase tracking-widest" style={{ color: LIGHT }}>
+                {item.title}
+              </h2>
+              <div className="h-px w-8" style={{ background: `${accent}50` }} />
+              <p className="text-sm leading-relaxed max-w-xs" style={{ color: `${LIGHT}60` }}>
+                {item.desc}
+              </p>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Bottom indicator */}
         <div className="flex flex-col items-center gap-3 pb-8 shrink-0">
           <div className="flex gap-2">
             {data.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  activeIndex === i ? "w-6 bg-zinc-900" : "w-1.5 bg-zinc-300"
-                }`}
+                className="h-1.5 rounded-full transition-all duration-300"
+                style={{
+                  width: activeIndex === i ? 24 : 6,
+                  background: activeIndex === i ? accent : `${LIGHT}20`,
+                }}
               />
             ))}
           </div>
           <motion.p
             animate={{ opacity: activeIndex === data.length - 1 ? 0 : 1 }}
             transition={{ duration: 0.3 }}
-            className="text-xs text-zinc-400 uppercase tracking-widest"
+            className="text-xs uppercase tracking-widest"
+            style={{ color: `${LIGHT}35` }}
           >
             Scroll untuk lanjut ↓
           </motion.p>
         </div>
-
       </div>
     </>
   );
