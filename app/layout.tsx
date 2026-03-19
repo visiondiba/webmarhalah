@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
 import ScrollSmoother from "@/components/ScrollSmoother";
 import Navbar from "@/components/Navbar";
+import Countdown from "@/components/Countdown";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumin Gen",
+  title: "The Name Generation",
   description: "Copyright 2025",
 };
 
@@ -36,15 +37,12 @@ export default function RootLayout({
       )}
     >
       <body className="font-sans antialiased">
+        <Countdown />
         <ScrollSmoother />
-        <Navbar/>
-        <div id="smooth-wrapper">
-          <div id="smooth-content">
-            
+  
             {children}
             <Footer />
-          </div>
-        </div>
+
       </body>
     </html>
   );

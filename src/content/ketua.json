@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Nama Ketua 1",
+    "jabatan": "Jabatan 1",
+    "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+    "image": "/assets/images/ketua_1_placeholder.jpg",
+    "accent": "#B8873A"
+  },
+  {
+    "name": "Nama Ketua 2",
+    "jabatan": "Jabatan 2",
+    "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+    "image": "/assets/images/ketua_2_placeholder.jpg",
+    "accent": "#C53A24"
+  },
+  {
+    "name": "Nama Ketua 3",
+    "jabatan": "Jabatan 3",
+    "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
+    "image": "/assets/images/ketua_3_placeholder.jpg",
+    "accent": "#7A3A20"
+  }
+]

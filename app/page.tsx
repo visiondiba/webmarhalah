@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import AboutSection from "@/components/AboutSection";
 import EmblemEssence from "@/components/EmblemEssence";
 import { motion, Variants, cubicBezier } from "framer-motion";
+import MascotSection from "@/components/MascotSection";
+import KetuaSection from "@/components/KetuaSection";
+import EventSection from "@/components/EventsSection";
 
 const ease = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -83,7 +86,7 @@ export default function HomePage() {
             className="mb-2"
           >
             <img
-              src="/assets/images/lambang2.webp"
+              src="/assets/images/lambang.webp"
               width={320}
               height={320}
               alt="Lambang Generasi"
@@ -93,29 +96,49 @@ export default function HomePage() {
           </motion.div>
 
           {/* Eyebrow */}
-          <motion.p
-            variants={fadeUp}
-            custom={1}
-            initial="hidden"
-            animate="show"
-            className="text-gold-light/60 text-xs sm:text-sm tracking-[0.35em] uppercase text-center font-medium"
-          >
-            Pondok Modern Darussalam Gontor
-          </motion.p>
+            <motion.p
+              variants={fadeUp}
+              custom={1}
+              initial="hidden"
+              animate="show"
+              className="text-gold-light/60 text-xs sm:text-sm tracking-[0.35em] uppercase text-center font-medium"
+            >
+              Pondok Modern Darussalam Gontor
+            </motion.p>
+            {/**Header */}
+<motion.h1
+  variants={fadeUp}
+  custom={2}
+  initial="hidden"
+  animate="show"
+  className="text-center text-4xl sm:text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest leading-none"
+>
+  <motion.span
+    className="inline-block"
+    style={{
+      backgroundImage: "linear-gradient(105deg, #D9B26A 0%, #F7E6B5 40%, #fffdf5 50%, #F7E6B5 60%, #D9B26A 100%)",
+      backgroundSize: "300% 100%",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      backgroundClip: "text",
+      WebkitTextStroke: "1px #D9B26A",
+    }}
+    animate={{ backgroundPosition: ["200% center", "-200% center"] }}
+    transition={{
+      duration: 8,
+      repeat: Infinity,
+      repeatType: "loop",
+      ease: "linear",
+      repeatDelay: 3,
+    }}
+  >
+    Name
+  </motion.span>
 
-          {/* Heading */}
-          <motion.h1
-            variants={fadeUp}
-            custom={2}
-            initial="hidden"
-            animate="show"
-            className="text-center text-4xl sm:text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest text-gold-light leading-none"
-          >
-            Name
-            <br />
-            <span className="text-white">Generation</span>
-          </motion.h1>
+  <br />
 
+  <span className="text-white">Generation</span>
+</motion.h1>
           {/* Ornamental divider */}
           <motion.div
             variants={fadeUp}
@@ -187,6 +210,15 @@ export default function HomePage() {
         className="w-full min-h-screen bg-accent"
       >
         <EmblemEssence />
+      </Box>
+      <Box as="section" id="mascot" className="w-full">
+          <MascotSection />
+      </Box>
+      <Box as="section" id="ketua" className="w-full">
+          <KetuaSection />
+      </Box>
+      <Box as="section" id="events" className="w-full">
+        <EventSection />
       </Box>
     </>
   );

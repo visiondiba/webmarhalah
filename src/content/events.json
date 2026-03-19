@@ -1,0 +1,43 @@
+
+[
+  {
+    "id": 1,
+    "title": "Pelantikan Pengurus",
+    "desc": "Seremoni resmi pelantikan pengurus marhalah periode baru disaksikan oleh seluruh civitas akademika pondok.",
+    "date": "12 Jan 2025",
+    "image": "/assets/images/event_1.jpg",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "title": "Malam Keakraban",
+    "desc": "Momen kebersamaan penuh kehangatan antar anggota marhalah dalam suasana yang akrab dan penuh semangat.",
+    "date": "18 Jan 2025",
+    "image": "/assets/images/event_2.jpg",
+    "featured": false
+  },
+  {
+    "id": 3,
+    "title": "Lomba Antar Kamar",
+    "desc": "Kompetisi seru antar kamar yang mempererat tali persaudaraan dan mengasah semangat sportivitas.",
+    "date": "24 Jan 2025",
+    "image": "/assets/images/event_3.jpg",
+    "featured": false
+  },
+  {
+    "id": 4,
+    "title": "Seminar Kepemimpinan",
+    "desc": "Pembekalan wawasan kepemimpinan dari tokoh-tokoh inspiratif untuk generasi penerus pondok.",
+    "date": "02 Feb 2025",
+    "image": "/assets/images/event_4.jpg",
+    "featured": false
+  },
+  {
+    "id": 5,
+    "title": "Pentas Seni Budaya",
+    "desc": "Pertunjukan seni dan budaya yang menampilkan bakat-bakat terbaik dari seluruh anggota marhalah.",
+    "date": "14 Feb 2025",
+    "image": "/assets/images/event_5.jpg",
+    "featured": false
+  }
+]
