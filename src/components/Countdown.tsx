@@ -7,7 +7,7 @@ import { motion, AnimatePresence, cubicBezier } from "framer-motion";
 const ease = cubicBezier(0.22, 1, 0.36, 1);
 
 // ─────────────────────────────────────────
-const TARGET = new Date(2026, 2, 20, 7, 0);
+const TARGET = new Date(2026, 2, 20, 8, 0);
 const SECRET_CODE = "gontor";
 // ─────────────────────────────────────────
 

@@ -1,17 +1,52 @@
 [
   {
-    "title": "Integritas",
-    "desc": "Kami percaya bahwa kejujuran adalah fondasi dari setiap tindakan.KLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate neque et enim sodales consectetur. Etiam vel enim sit amet tellus posuere auctor.",
-    "image": "/assets/images/lambang.webp"
+    "title": "Ornamen 'Lafadz Allah'",
+    "desc": "Menggambarkan niat paling tinggi dan tujuan akhir dari setiap langkah perjuangan Siswa Akhir KMI 2027 adalah ibadah Lillahi Ta’aala dan mencari ridho Allah SWT.",
+    "image": "/assets/images/part_logo/lafadz_allah.webp"
   },
   {
-    "title": "Kolaborasi",
-    "desc": "KLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate neque et enim sodales consectetur. Etiam vel enim sit amet tellus posuere auctor.",
-    "image": "/assets/images/lambang.webp"
+    "title": "Mahkota",
+    "desc": "Mahkota yang disematkan kepada Siswa Akhir KMI 2027, calon-calon pemimpin umat yang mempunyai karakter dan sifat-sifat yang mulia. Merekalah yang akan mengarahkan peradaban menuju puncak kejayaannya.",
+    "image": "/assets/images/part_logo/mahkota.webp"
   },
   {
-    "title": "Inovasi",
-    "desc": "Kami selalu mencari cara baru untuk berkembang dan beradaptasi.KLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vulputate neque et enim sodales consectetur. Etiam vel enim sit amet tellus posuere auctor.",
-    "image": "/assets/images/lambang.webp"
+    "title": "Lempengan",
+    "desc": "Lempeng besi melambangkan kiprah serta pengabdian Siswa Akhir KMI 2027 kepada masyarakat akan selalu membawa label nama PMDG serta 2 falsafah utamanya, Panca Jiwa serta Moto Pondok.",
+    "image": "/assets/images/part_logo/lempengan.webp"
+  },
+  {
+    "title": "Ornamen 'Lafadz Muhammad'",
+    "desc": "Rasulullah SAW sebagai uswah hasanah bagi Siswa Akhir KMI 2027 yang menjadi inspirasi dari segi akhlak, perilaku, serta perjuangan dalam menebar nilai Keislaman.",
+    "image": "/assets/images/part_logo/muhammad.webp"
+  },
+  {
+    "title": "Al-Qur'an, Hadist, dan Pena",
+    "desc": "Al-Qur'an dan Hadist melambangkan dua sumber utama risalah Keislaman yang menjadi pedoman hidup Siswa Akhir KMI 2027. Pena berbentuk kunci melambangkan kontribusi Siswa Akhir KMI 2027 yang akan mengukir sejarah di dunia dan menjadi kunci untuk membuka gerbang kejayaan umat.",
+    "image": "/assets/images/part_logo/key_alquran_hadist.webp"
+  },
+  {
+    "title": "Syahadat & Emblem Graduate 2027",
+    "desc": "Melambangkan seluruh proses pendidikan dan perjuangan Siswa Akhir KMI 2027 berlandaskan tauhid sebagai pondasi serta syariat Islam sebagai relnya. Emblem Graduate 2027 berarti titik tolak lahirnya alumni yang membawa nilai serta falsafah Gontori menuju medan pengabdian yang lebih luas.",
+    "image": "/assets/images/part_logo/syahadat_emblem.webp"
+  },
+  {
+    "title": "Emblem Darussalam Di Atas Bola Dunia dan Golden Age Catalyst",
+    "desc": "Lempeng besi melambangkan kiprah serta pengabdian Siswa Akhir KMI 2027 kepada masyarakat akan selalu membawa label nama PMDG serta 2 falsafah utamanya, Panca Jiwa serta Moto Pondok.",
+    "image": "/assets/images/part_logo/darussalam_golden.webp"
+  },
+  {
+    "title": "Permata",
+    "desc": "Ibarat permata yang menjadi simbol keindahan akhlak. Melambangkan 4 sifat wajib kenabian yang menjadi pilar karakter Siswa Akhir KMI 2027 dalam menghadapi tantangan zaman: shidiq (jujur), amanah (tanggung jawab), tabligh (menyampaikan), fathonah (cerdas).",
+    "image": "/assets/images/part_logo/empat_permata.webp"
+  },
+  {
+    "title": "Bulan Sabit",
+    "desc": "Bulan sabit adalah awal yang baru dan cahaya yang menerangi kegelapan malam. Seperti generasi ini yang menjadi tonggak sejarah, pembuka lembaran kedua 100 tahun perjalanan Gontor mendidik kehidupan umat.",
+    "image": "/assets/images/part_logo/Crescent Moon.webp"
+  },
+  {
+    "title": "Cincin Lingkaran Emas",
+    "desc": "Melambangkan ketangguhan Siswa Akhir KMI 2027 dalam menjaga segala prinsip Islam maupun falsafah Gontori serta ikatan persaudaraan yang utuh dalam setiap langkah mereka.",
+    "image": "/assets/images/part_logo/golden_ring.webp"
   }
 ]

@@ -1,23 +1,23 @@
 [
   {
-    "name": "Nama Ketua 1",
-    "jabatan": "Jabatan 1",
+    "name": "Muhammad Fachrillah",
+    "jabatan": "Ketua 1",
     "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    "image": "/assets/images/ketua_1_placeholder.jpg",
+    "image": "/assets/images/ketua/fachrillah.webp",
     "accent": "#B8873A"
   },
   {
-    "name": "Nama Ketua 2",
-    "jabatan": "Jabatan 2",
+    "name": "Yusuf Praba Andhika Prayoga",
+    "jabatan": "Ketua 2",
     "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    "image": "/assets/images/ketua_2_placeholder.jpg",
+    "image": "/assets/images/ketua/yusuf.webp",
     "accent": "#C53A24"
   },
   {
-    "name": "Nama Ketua 3",
-    "jabatan": "Jabatan 3",
+    "name": "Fawwaz Muhammad Royyan",
+    "jabatan": "Ketua 3",
     "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    "image": "/assets/images/ketua_3_placeholder.jpg",
+    "image": "/assets/images/ketua/fawwaz.webp",
     "accent": "#7A3A20"
   }
 ]

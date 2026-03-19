@@ -6,37 +6,166 @@
 
 /* ── FONTS ── */
 @font-face {
-  font-family: "Amagro";
-  src: url("/assets/font/amagro.ttf") format("truetype");
+  font-family: "Zhoro";
+  src: url("/assets/font/zhoro.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyThin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyThinItalic.otf") format("opentype");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyLight.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyLightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyRegular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyMedium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyMediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbySemibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbySemiboldItalic.otf") format("opentype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyBold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyBoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyExtrabold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyExtrabold Italic.otf") format("opentype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/font/VisbyHeavy.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Visby";
+  src: url("/assets/fontVisbyHeavyItalic.otf") format("opentype");
+  font-weight: 900;
+  font-style: italic;
   font-display: swap;
 }
 
 /* ── THEME ── */
 @theme {
   /* Typography */
-  --font-display: "Amagro", sans-serif;
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-display: "Zhoro", sans-serif;
+  --font-sans: "Visby", sans-serif;
+  --font-mono: "Visby", sans-serif;
 
-  /* Gold */
-  --color-gold-light: #F7E6B5;
-  --color-gold:       #D9B26A;
-  --color-gold-dark:  #B8873A;
+  /* Gold → Honey & Alpine Oak */
+  --color-gold-light: #edddb4;
+  --color-gold:       #efb052;
+  --color-gold-dark:  #967146;
 
-  /* Brown */
-  --color-brown-light: #A45A30;
-  --color-brown:       #7A3A20;
-  --color-brown-dark:  #5A2C18;
+  /* Brown → Caramel & Dark Brown */
+  --color-brown-light: #967146;
+  --color-brown:       #6b4a2a;
+  --color-brown-dark:  #512f23;
 
-  /* Red Brand */
+  /* Red Brand — tetap, gak ada di palette */
   --color-redbrand-glow: #E25930;
   --color-redbrand:      #C53A24;
   --color-redbrand-dark: #8A1F17;
 
-  /* Neutral */
-  --color-neutralbg: #FDF9F0;
+  /* Neutral → Alabaster & Vanilla */
+  --color-neutralbg:     #ede9e4;
+  --color-neutralbg-alt: #edddb4;
 }
 
 @theme inline {

@@ -73,11 +73,10 @@ export default function MascotSection() {
       {/* Full bleed image */}
       <div className="absolute inset-0">
         <Image
-          src="/assets/images/maskot_placeholder.jpg"
+          src="/assets/images/maskot.webp"
           alt="Maskot"
           fill
           className="object-cover object-top"
-          style={{ opacity: 0.5 }}
         />
       </div>
 
@@ -134,7 +133,7 @@ export default function MascotSection() {
           className="text-xs uppercase tracking-[0.35em]"
           style={{ color: "#D9B26A" }}
         >
-          Maskot Marhalah
+          Maskot Angkatan
         </GlitchText>
 
         <GlitchText delay={0.35}>
@@ -142,9 +141,8 @@ export default function MascotSection() {
             className="text-5xl md:text-7xl xl:text-8xl uppercase tracking-widest leading-none"
             style={{ color: "#F7E6B5" }}
           >
-            Nama
-            <br />
-            <span style={{ color: "#D9B26A" }}>Maskot</span>
+            Zu&apos;aym
+
           </h1>
         </GlitchText>
 
@@ -155,9 +153,7 @@ export default function MascotSection() {
           className="text-sm md:text-base leading-relaxed max-w-md"
           style={{ color: "#F7E6B570" }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-          ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+           Berakar dari za&apos;āmah (kepemimpinan), mencerminkan sosok yang siap memikul amanah dan menentukan arah perjuangan—dekat dengan yang dipimpinnya, teguh dalam prinsip, berintegritas, serta konsisten membuktikan seruan melalui tindakan nyata, sehingga kepemimpinannya hidup dalam amal dan berdampak bagi peradaban umat.
         </GlitchText>
 
         {/* RPG stat bars */}

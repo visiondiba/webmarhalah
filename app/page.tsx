@@ -90,7 +90,7 @@ export default function HomePage() {
               width={320}
               height={320}
               alt="Lambang Generasi"
-              className="w-48 sm:w-64 md:w-86 object-contain"
+              className="w-100 h-auto sm:w-64 md:w-86 object-contain"
               style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.4))" }}
             />
           </motion.div>
@@ -132,7 +132,7 @@ export default function HomePage() {
       repeatDelay: 3,
     }}
   >
-    Name
+    Impervious
   </motion.span>
 
   <br />
@@ -158,27 +158,10 @@ export default function HomePage() {
             custom={4}
             initial="hidden"
             animate="show"
-            className="text-center text-gold-light/70 tracking-wide font-light text-base sm:text-lg md:text-xl max-w-sm leading-relaxed"
+            className="text-center uppercase tracking-widest text-gold-light font-extrabold text-base sm:text-lg md:text-xl max-w-sm leading-relaxed"
           >
-            The first generation of Gontor&apos;s second decade.
+           Golden Age Catalyst
           </motion.p>
-
-          {/* CTA */}
-          <motion.div
-            variants={fadeUp}
-            custom={5}
-            initial="hidden"
-            animate="show"
-            className="mt-6"
-          >
-            <Button
-              size="lg"
-              className="rounded-full px-10 py-6 text-sm sm:text-base md:text-lg uppercase tracking-widest bg-redbrand hover:bg-redbrand-dark text-white transition-all duration-300 hover:scale-105 active:scale-95"
-              style={{ boxShadow: "0 4px 24px rgba(197,58,36,0.35)" }}
-            >
-              Klik disini!
-            </Button>
-          </motion.div>
 
           {/* Scroll hint */}
           <motion.div
@@ -217,9 +200,14 @@ export default function HomePage() {
       <Box as="section" id="ketua" className="w-full">
           <KetuaSection />
       </Box>
-      <Box as="section" id="events" className="w-full">
+    {/**
+     * 
+     * <Box as="section" id="events" className="w-full">
         <EventSection />
       </Box>
+     */}
+     
+    
     </>
   );
 }
