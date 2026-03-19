@@ -42,15 +42,15 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3">
           <h1 className="text-2xl uppercase tracking-widest leading-none" style={{ color: "#D9B26A" }}>
-            The Impervious Generation
+          Impervious Generation
           </h1>
           <Separator style={{ background: "#B8873A30" }} />
           <p className="text-xs uppercase tracking-[0.25em]" style={{ color: "#B8873A" }}>
             Pondok Modern Darussalam Gontor
           </p>
         </div>
-
-        <div className="flex flex-row items-center gap-4">
+        {/**
+         * <div className="flex flex-row items-center gap-4">
           <p className="text-xs uppercase tracking-[0.25em]" style={{ color: "#B8873A50" }}>
             Hubungi Kami
           </p>
@@ -94,6 +94,8 @@ export default function Footer() {
           ))}
                   </div>
 
+         */}
+        
         <div className="flex flex-col items-start md:items-end gap-1">
           <p className="text-xs" style={{ color: "#D9B26A50" }}>Made with care by</p>
           <p className="text-sm font-medium" style={{ color: "#D9B26A80" }}>Siswa Akhir KMI 6101</p>

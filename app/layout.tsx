@@ -6,7 +6,7 @@ import ScrollSmoother from "@/components/ScrollSmoother";
 import Countdown from "@/components/Countdown";
 
 export const metadata: Metadata = {
-  title: "The Impervious Generation | Gontor",
+  title: "Impervious Generation",
   description:
     "Generasi tonggak 100 Tahun Kedua Gontor — tangguh, teguh, kokoh, dan dinamis dalam mewujudkan pusat peradaban dunia.",
   keywords: [

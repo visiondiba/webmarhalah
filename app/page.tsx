@@ -87,10 +87,10 @@ export default function HomePage() {
           >
             <img
               src="/assets/images/lambang.webp"
-              width={320}
+              width={240}
               height={320}
               alt="Lambang Generasi"
-              className="w-100 h-auto sm:w-64 md:w-86 object-contain"
+              className="w-100 h-auto sm:w-64 md:w-72 object-contain"
               style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.4))" }}
             />
           </motion.div>
