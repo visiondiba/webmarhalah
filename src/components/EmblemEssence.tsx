@@ -275,29 +275,6 @@ export default function EmblemEssence() {
               </h1>
             </div>
 
-            <div className="flex items-center gap-6">
-              {data.map((d, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <motion.div
-                    className="rounded-full"
-                    animate={{
-                      width: activeIndex === i ? 24 : 6,
-                      height: 6,
-                      background: activeIndex === i ? ACCENTS[i % ACCENTS.length] : `${LIGHT}20`,
-                    }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  />
-                  <motion.span
-                    className="text-xs uppercase tracking-widest"
-                    animate={{ color: activeIndex === i ? ACCENTS[i % ACCENTS.length] : `${LIGHT}40` }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {d.title}
-                  </motion.span>
-                </div>
-              ))}
-            </div>
-
             <span className="text-xs tabular-nums" style={{ color: `${LIGHT}30` }}>
               {String(activeIndex + 1).padStart(2, "0")} / {String(data.length).padStart(2, "0")}
             </span>
