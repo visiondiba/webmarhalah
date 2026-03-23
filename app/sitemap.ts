@@ -7,9 +7,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: new Date().toISOString().split('T')[0], 
       changeFrequency: "monthly",
-      priority: 1,
+      priority: 1.0, 
     },
   ];
 }
