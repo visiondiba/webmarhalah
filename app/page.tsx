@@ -8,6 +8,7 @@ import { motion, Variants, cubicBezier } from "framer-motion";
 import MascotSection from "@/components/MascotSection";
 import KetuaSection from "@/components/KetuaSection";
 import EventSection from "@/components/EventsSection";
+import PanggungGembira from "@/components/PanggungGembira";
 
 const ease = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -29,17 +30,17 @@ export default function HomePage() {
         className="relative w-full min-h-screen bg-gold-dark overflow-hidden"
       >
         {/* Background photo dengan vignette mask */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage: `url('/assets/images/bg_hero.jpg')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              maskImage: `radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%)`,
-              WebkitMaskImage: `radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%)`,
-              opacity: 0.2, // sesuaikan 0.1 - 0.4
-            }}
-          />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `url('/assets/images/bg_hero.jpg')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            maskImage: `radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%)`,
+            WebkitMaskImage: `radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%)`,
+            opacity: 0.2, // sesuaikan 0.1 - 0.4
+          }}
+        />
 
         {/* Diagonal lines texture */}
         <div
@@ -96,49 +97,49 @@ export default function HomePage() {
           </motion.div>
 
           {/* Eyebrow */}
-            <motion.p
-              variants={fadeUp}
-              custom={1}
-              initial="hidden"
-              animate="show"
-              className="text-gold-light/60 text-xs sm:text-sm tracking-[0.35em] uppercase text-center font-medium"
+          <motion.p
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            animate="show"
+            className="text-gold-light/60 text-xs sm:text-sm tracking-[0.35em] uppercase text-center font-medium"
+          >
+            Pondok Modern Darussalam Gontor
+          </motion.p>
+          {/**Header */}
+          <motion.h1
+            variants={fadeUp}
+            custom={2}
+            initial="hidden"
+            animate="show"
+            className="text-center text-4xl sm:text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest leading-none"
+          >
+            <motion.span
+              className="inline-block"
+              style={{
+                backgroundImage: "linear-gradient(105deg, #D9B26A 0%, #F7E6B5 40%, #fffdf5 50%, #F7E6B5 60%, #D9B26A 100%)",
+                backgroundSize: "300% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                WebkitTextStroke: "1px #D9B26A",
+              }}
+              animate={{ backgroundPosition: ["200% center", "-200% center"] }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+                repeatDelay: 3,
+              }}
             >
-              Pondok Modern Darussalam Gontor
-            </motion.p>
-            {/**Header */}
-<motion.h1
-  variants={fadeUp}
-  custom={2}
-  initial="hidden"
-  animate="show"
-  className="text-center text-4xl sm:text-4xl md:text-6xl lg:text-7xl uppercase tracking-widest leading-none"
->
-  <motion.span
-    className="inline-block"
-    style={{
-      backgroundImage: "linear-gradient(105deg, #D9B26A 0%, #F7E6B5 40%, #fffdf5 50%, #F7E6B5 60%, #D9B26A 100%)",
-      backgroundSize: "300% 100%",
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-      backgroundClip: "text",
-      WebkitTextStroke: "1px #D9B26A",
-    }}
-    animate={{ backgroundPosition: ["200% center", "-200% center"] }}
-    transition={{
-      duration: 8,
-      repeat: Infinity,
-      repeatType: "loop",
-      ease: "linear",
-      repeatDelay: 3,
-    }}
-  >
-    Impervious
-  </motion.span>
+              Impervious
+            </motion.span>
 
-  <br />
+            <br />
 
-  <span className="text-white">Generation</span>
-</motion.h1>
+            <span className="text-white">Generation</span>
+          </motion.h1>
           {/* Ornamental divider */}
           <motion.div
             variants={fadeUp}
@@ -160,7 +161,7 @@ export default function HomePage() {
             animate="show"
             className="text-center uppercase tracking-widest text-gold-light font-extrabold text-base sm:text-lg md:text-xl max-w-sm leading-relaxed"
           >
-           Golden Age Catalyst
+            Golden Age Catalyst
           </motion.p>
 
           {/* Scroll hint */}
@@ -183,9 +184,14 @@ export default function HomePage() {
         id="about"
         className="w-full min-h-screen bg-neutralbg border-y border-gold/20"
       >
+
         <AboutSection />
       </Box>
-
+      {/* ── PANGGUNG GEMBIRA ── */}
+      <PanggungGembira />
+      <Box as="section" id="events" className="w-full">
+        <EventSection />
+      </Box>
       {/* ── EMBLEM ESSENCE ── */}
       <Box
         as="section"
@@ -195,19 +201,14 @@ export default function HomePage() {
         <EmblemEssence />
       </Box>
       <Box as="section" id="mascot" className="w-full">
-          <MascotSection />
+        <MascotSection />
       </Box>
       <Box as="section" id="ketua" className="w-full">
-          <KetuaSection />
+        <KetuaSection />
       </Box>
-    {/**
-     * 
-     * <Box as="section" id="events" className="w-full">
-        <EventSection />
-      </Box>
-     */}
-     
-    
+
+
+
     </>
   );
 }

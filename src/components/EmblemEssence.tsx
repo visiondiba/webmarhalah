@@ -1,16 +1,19 @@
-// src/components/EmblemEssence.tsx
 "use client";
 
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi
+} from "@/components/ui/carousel";
 import Box from "@/components/Box";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence, cubicBezier } from "framer-motion";
 import data from "@/content/lambang.json";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ease = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -142,130 +145,64 @@ function RingSystem({
 
 export default function EmblemEssence() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [showSkip, setShowSkip] = useState(false);
-  const sectionRefPC = useRef<HTMLDivElement>(null);
-  const sectionRefMobile = useRef<HTMLDivElement>(null);
+  const [apiPC, setApiPC] = useState<CarouselApi>();
+  const [apiMobile, setApiMobile] = useState<CarouselApi>();
 
   const accent = ACCENTS[activeIndex % ACCENTS.length];
   const item = data[activeIndex];
-  const isLast = activeIndex === data.length - 1;
 
-  // Mobile auto-interval
+  const updateIndex = useCallback((index: number) => {
+    setActiveIndex(index);
+    apiPC?.scrollTo(index);
+    apiMobile?.scrollTo(index);
+  }, [apiPC, apiMobile]);
+
   useEffect(() => {
-    const mm = gsap.matchMedia();
+    if (!apiPC) return;
+    apiPC.on("select", () => {
+      setActiveIndex(apiPC.selectedScrollSnap());
+    });
+  }, [apiPC]);
+
+  useEffect(() => {
+    if (!apiMobile) return;
+    apiMobile.on("select", () => {
+      setActiveIndex(apiMobile.selectedScrollSnap());
+    });
+  }, [apiMobile]);
+
+  // Auto-slide for mobile
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
     let interval: ReturnType<typeof setInterval> | null = null;
-
-    mm.add("(max-width: 767px)", () => {
+    if (isMobile) {
       interval = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % data.length);
+        if (apiMobile) {
+          if (apiMobile.canScrollNext()) {
+            apiMobile.scrollNext();
+          } else {
+            apiMobile.scrollTo(0);
+          }
+        }
       }, 4000);
-      return () => { if (interval) clearInterval(interval); };
-    });
-
-    return () => mm.revert();
-  }, []);
-
-  // ScrollTrigger pin
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.matchMedia({
-        "(min-width: 768px)": () => {
-          ScrollTrigger.create({
-            trigger: sectionRefPC.current,
-            start: "top top",
-            end: () => `+=${(data.length - 1) * window.innerHeight}`,
-            pin: true,
-            pinSpacing: true,
-            onUpdate: (self) => {
-              const index = Math.min(
-                Math.floor(self.progress * data.length),
-                data.length - 1
-              );
-              setActiveIndex(index);
-            },
-          });
-        },
-        "(max-width: 767px)": () => {
-          ScrollTrigger.create({
-            trigger: sectionRefMobile.current,
-            start: "top top",
-            end: () => `+=${(data.length - 1) * window.innerHeight}`,
-            pin: true,
-            pinSpacing: true,
-            onUpdate: (self) => {
-              const index = Math.min(
-                Math.floor(self.progress * data.length),
-                data.length - 1
-              );
-              setActiveIndex(index);
-            },
-          });
-        },
-      });
-      ScrollTrigger.refresh();
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  // Show skip after 2s
-  useEffect(() => {
-    const t = setTimeout(() => setShowSkip(true), 2000);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Skip to end
-  const skipToEnd = () => {
-    ScrollTrigger.getAll().forEach((st) => {
-      if (
-        st.trigger === sectionRefPC.current ||
-        st.trigger === sectionRefMobile.current
-      ) {
-        st.scroll(st.end);
-      }
-    });
-    setActiveIndex(data.length - 1);
-  };
-
-  const SkipButton = () => (
-    <AnimatePresence>
-      {showSkip && !isLast && (
-        <motion.button
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 8 }}
-          transition={{ duration: 0.3 }}
-          onClick={skipToEnd}
-          className="absolute bottom-6 right-10 text-xs uppercase tracking-widest px-4 py-2 rounded-full border transition-all duration-300"
-          style={{ color: `${LIGHT}35`, borderColor: `${LIGHT}12` }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = LIGHT;
-            e.currentTarget.style.borderColor = `${LIGHT}40`;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = `${LIGHT}35`;
-            e.currentTarget.style.borderColor = `${LIGHT}12`;
-          }}
-        >
-          Skip →
-        </motion.button>
-      )}
-    </AnimatePresence>
-  );
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [apiMobile]);
 
   return (
     <>
       {/* ── DESKTOP ── */}
-      <Box className="hidden md:flex flex-col" style={{ background: BG }}>
-        <div ref={sectionRefPC} className="relative w-full h-screen flex flex-col overflow-hidden">
-
+      <Box className="hidden md:flex flex-col min-h-screen" style={{ background: BG }}>
+        <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
           <motion.div
             className="h-1 w-full shrink-0"
             animate={{ background: accent }}
             transition={{ duration: 0.6 }}
           />
 
-          <div className="flex items-center justify-between px-16 py-5 shrink-0">
+          <div className="flex items-center justify-between px-16 py-5 shrink-0 relative z-20">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.35em]" style={{ color: `${LIGHT}60` }}>
                 Identitas Visual
@@ -282,9 +219,9 @@ export default function EmblemEssence() {
 
           <Separator style={{ background: `${LIGHT}10` }} />
 
-          <div className="flex flex-1 overflow-hidden">
+          <div className="flex flex-1 overflow-hidden py-10">
             {/* Left */}
-            <div className="flex flex-col justify-center w-72 px-16 shrink-0 gap-6">
+            <div className="flex flex-col justify-center w-72 px-16 shrink-0 gap-6 relative z-20">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
@@ -326,40 +263,42 @@ export default function EmblemEssence() {
             {/* Center */}
             <div className="flex-1 flex items-center justify-center relative">
               <RingSystem rings={rings} accent={accent} />
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, scale: 0.88 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.08 }}
-                  transition={{ duration: 0.5, ease }}
-                  className="relative z-10 flex items-center justify-center"
-                  style={{ width: 512, height: 512 }}
-                >
-                  <motion.img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-contain"
-                    animate={{ scale: [1, 1.03, 1] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    style={{ filter: `drop-shadow(0 0 32px ${accent}60) drop-shadow(0 0 80px ${accent}25)` }}
-                  />
-                </motion.div>
-              </AnimatePresence>
+              
+              <Carousel setApi={setApiPC} className="w-full max-w-lg z-10" opts={{ loop: true }}>
+                <CarouselContent className="h-[512px]">
+                  {data.map((slideItem, index) => {
+                    const itemAccent = ACCENTS[index % ACCENTS.length];
+                    return (
+                      <CarouselItem key={index} className="flex items-center justify-center h-full">
+                        <motion.img
+                          src={slideItem.image}
+                          alt={slideItem.title}
+                          className="w-full h-full object-contain cursor-grab active:cursor-grabbing"
+                          animate={{ scale: [1, 1.03, 1] }}
+                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                          style={{ filter: `drop-shadow(0 0 32px ${itemAccent}60) drop-shadow(0 0 80px ${itemAccent}25)` }}
+                        />
+                      </CarouselItem>
+                    );
+                  })}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-[-3rem] bg-transparent border-white/20 text-white hover:bg-white/10" />
+                <CarouselNext className="absolute right-[-3rem] bg-transparent border-white/20 text-white hover:bg-white/10" />
+              </Carousel>
             </div>
 
             {/* Right */}
-            <div className="flex flex-col items-center justify-center w-24 shrink-0 gap-4">
+            <div className="flex flex-col items-center justify-center w-24 shrink-0 gap-4 relative z-20">
               {data.map((_, i) => (
-                <motion.div
+                <button
                   key={i}
-                  className="rounded-full cursor-default"
-                  animate={{
+                  onClick={() => updateIndex(i)}
+                  className="rounded-full transition-all duration-300 outline-none"
+                  style={{
                     width: 4,
                     height: activeIndex === i ? 32 : 8,
                     background: activeIndex === i ? accent : `${LIGHT}20`,
                   }}
-                  transition={{ duration: 0.35 }}
                 />
               ))}
               <div className="h-px w-4 mt-4" style={{ background: `${LIGHT}10` }} />
@@ -371,26 +310,12 @@ export default function EmblemEssence() {
               </span>
             </div>
           </div>
-
-          <div className="flex justify-center py-5 shrink-0">
-            <motion.p
-              animate={{ opacity: isLast ? 0 : 1 }}
-              transition={{ duration: 0.3 }}
-              className="text-xs uppercase tracking-widest"
-              style={{ color: `${LIGHT}35` }}
-            >
-              Scroll untuk lanjut ↓
-            </motion.p>
-          </div>
-
-          <SkipButton />
         </div>
       </Box>
 
       {/* ── MOBILE ── */}
       <div
-        ref={sectionRefMobile}
-        className="relative flex md:hidden flex-col h-screen overflow-hidden"
+        className="relative flex md:hidden flex-col min-h-screen overflow-hidden"
         style={{ background: BG }}
       >
         <motion.div
@@ -399,7 +324,7 @@ export default function EmblemEssence() {
           transition={{ duration: 0.6 }}
         />
 
-        <div className="px-6 pt-8 pb-4 shrink-0 border-b" style={{ borderColor: `${LIGHT}10` }}>
+        <div className="px-6 pt-8 pb-4 shrink-0 border-b relative z-20" style={{ borderColor: `${LIGHT}10` }}>
           <p className="text-xs font-medium uppercase tracking-[0.35em] mb-1" style={{ color: `${LIGHT}50` }}>
             Filosofi Logo
           </p>
@@ -408,64 +333,67 @@ export default function EmblemEssence() {
           </h1>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6">
-          <div className="relative flex items-center justify-center">
+        <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6 py-8">
+          <div className="relative flex items-center justify-center w-full">
             <RingSystem rings={mobileRings} accent={accent} />
-            <motion.div
-              animate={{ scale: [1, 1.03, 1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative z-10"
-            >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={activeIndex}
-                  src={item.image}
-                  alt={item.title}
-                  initial={{ opacity: 0, scale: 0.88 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.08 }}
-                  transition={{ duration: 0.45, ease }}
-                  className="w-36 h-36 object-contain"
-                  style={{ filter: `drop-shadow(0 0 20px ${accent}60) drop-shadow(0 0 50px ${accent}25)` }}
-                />
-              </AnimatePresence>
-            </motion.div>
+            
+            <Carousel setApi={setApiMobile} className="w-full z-10" opts={{ loop: true }}>
+              <CarouselContent>
+                {data.map((slideItem, index) => {
+                  const itemAccent = ACCENTS[index % ACCENTS.length];
+                  return (
+                    <CarouselItem key={index} className="flex justify-center items-center h-48">
+                      <motion.img
+                        src={slideItem.image}
+                        alt={slideItem.title}
+                        className="w-36 h-36 object-contain"
+                        animate={{ scale: [1, 1.03, 1] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        style={{ filter: `drop-shadow(0 0 20px ${itemAccent}60) drop-shadow(0 0 50px ${itemAccent}25)` }}
+                      />
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+            </Carousel>
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.35, ease }}
-              className="flex flex-col items-center gap-3 text-center"
-            >
-              <Badge
-                variant="outline"
-                className="uppercase tracking-widest text-xs"
-                style={{ borderColor: `${accent}50`, color: accent, background: `${accent}12` }}
+          <div className="min-h-[200px] flex items-start justify-center w-full relative z-20">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease }}
+                className="flex flex-col items-center gap-3 text-center"
               >
-                Filosofi Lambang
-              </Badge>
-              <h2 className="text-2xl font-semibold uppercase tracking-widest" style={{ color: LIGHT }}>
-                {item.title}
-              </h2>
-              <div className="h-px w-8" style={{ background: `${accent}50` }} />
-              <p className="text-sm leading-relaxed max-w-xs" style={{ color: `${LIGHT}60` }}>
-                {item.desc}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+                <Badge
+                  variant="outline"
+                  className="uppercase tracking-widest text-xs"
+                  style={{ borderColor: `${accent}50`, color: accent, background: `${accent}12` }}
+                >
+                  Filosofi Lambang
+                </Badge>
+                <h2 className="text-2xl font-semibold uppercase tracking-widest" style={{ color: LIGHT }}>
+                  {item.title}
+                </h2>
+                <div className="h-px w-8" style={{ background: `${accent}50` }} />
+                <p className="text-sm leading-relaxed max-w-xs" style={{ color: `${LIGHT}60` }}>
+                  {item.desc}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
-        <div className="flex flex-col items-center gap-3 pb-8 shrink-0">
+        <div className="flex flex-col items-center gap-3 pb-8 shrink-0 relative z-20">
           <div className="flex gap-2">
             {data.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setActiveIndex(i)}
-                className="h-1.5 rounded-full transition-all duration-300"
+                onClick={() => updateIndex(i)}
+                className="h-1.5 rounded-full transition-all duration-300 outline-none"
                 style={{
                   width: activeIndex === i ? 24 : 6,
                   background: activeIndex === i ? accent : `${LIGHT}20`,
@@ -473,17 +401,7 @@ export default function EmblemEssence() {
               />
             ))}
           </div>
-          <motion.p
-            animate={{ opacity: isLast ? 0 : 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-xs uppercase tracking-widest"
-            style={{ color: `${LIGHT}35` }}
-          >
-            Scroll untuk lanjut ↓
-          </motion.p>
         </div>
-
-        <SkipButton />
       </div>
     </>
   );

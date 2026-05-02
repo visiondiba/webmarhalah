@@ -83,6 +83,8 @@ keywords: [
   },
 };
 
+import LoadingScreen from "@/components/LoadingScreen";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -96,6 +98,7 @@ export default function RootLayout({
       )}
     >
       <body className="font-sans antialiased">
+            <LoadingScreen />
             {children}
             <Footer />
 

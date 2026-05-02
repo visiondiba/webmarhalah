@@ -135,37 +135,93 @@
 
 @font-face {
   font-family: "Visby";
-  src: url("/assets/fontVisbyHeavyItalic.otf") format("opentype");
+  src: url("/assets/font/VisbyHeavyItalic.otf") format("opentype");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Amagro';
+  src: url('/assets/font/amagro.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 /* ── THEME ── */
 @theme {
   /* Typography */
   --font-display: "Zhoro", sans-serif;
+  --font-pg: "Amagro", sans-serif;
   --font-sans: "Visby", sans-serif;
   --font-mono: "Visby", sans-serif;
 
   /* Gold → Honey & Alpine Oak */
   --color-gold-light: #edddb4;
-  --color-gold:       #efb052;
-  --color-gold-dark:  #967146;
+  --color-gold: #efb052;
+  --color-gold-dark: #967146;
 
   /* Brown → Caramel & Dark Brown */
   --color-brown-light: #967146;
-  --color-brown:       #6b4a2a;
-  --color-brown-dark:  #512f23;
+  --color-brown: #6b4a2a;
+  --color-brown-dark: #512f23;
 
   /* Red Brand — tetap, gak ada di palette */
   --color-redbrand-glow: #E25930;
-  --color-redbrand:      #C53A24;
+  --color-redbrand: #C53A24;
   --color-redbrand-dark: #8A1F17;
 
   /* Neutral → Alabaster & Vanilla */
-  --color-neutralbg:     #ede9e4;
+  --color-neutralbg: #ede9e4;
   --color-neutralbg-alt: #edddb4;
+
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
+  @keyframes shimmer-slide {
+    to {
+      transform: translate(calc(100cqw - 100%), 0);
+    }
+  }
+
+  @keyframes spin-around {
+    0% {
+      transform: translateZ(0) rotate(0);
+    }
+    15%,
+    35% {
+      transform: translateZ(0) rotate(90deg);
+    }
+    65%,
+    85% {
+      transform: translateZ(0) rotate(270deg);
+    }
+    100% {
+      transform: translateZ(0) rotate(360deg);
+    }
+  }
 }
 
 @theme inline {
@@ -174,48 +230,48 @@
   --font-mono: var(--font-geist-mono);
 
   /* Colors */
-  --color-background:        var(--background);
-  --color-foreground:        var(--foreground);
-  --color-card:              var(--card);
-  --color-card-foreground:   var(--card-foreground);
-  --color-popover:           var(--popover);
-  --color-popover-foreground:var(--popover-foreground);
-  --color-primary:           var(--primary);
-  --color-primary-foreground:var(--primary-foreground);
-  --color-secondary:             var(--secondary);
-  --color-secondary-foreground:  var(--secondary-foreground);
-  --color-muted:             var(--muted);
-  --color-muted-foreground:  var(--muted-foreground);
-  --color-accent:            var(--accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-destructive:       var(--destructive);
-  --color-border:            var(--border);
-  --color-input:             var(--input);
-  --color-ring:              var(--ring);
-  --color-chart-1:           var(--chart-1);
-  --color-chart-2:           var(--chart-2);
-  --color-chart-3:           var(--chart-3);
-  --color-chart-4:           var(--chart-4);
-  --color-chart-5:           var(--chart-5);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 
   /* Radius */
-  --radius-sm:  calc(var(--radius) * 0.6);
-  --radius-md:  calc(var(--radius) * 0.8);
-  --radius-lg:  var(--radius);
-  --radius-xl:  calc(var(--radius) * 1.4);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* Sidebar */
-  --color-sidebar:                    var(--sidebar);
-  --color-sidebar-foreground:         var(--sidebar-foreground);
-  --color-sidebar-primary:            var(--sidebar-primary);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent:             var(--sidebar-accent);
-  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
-  --color-sidebar-border:             var(--sidebar-border);
-  --color-sidebar-ring:               var(--sidebar-ring);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 /* ── LIGHT MODE ── */
@@ -294,10 +350,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground font-sans;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
   }
 }
