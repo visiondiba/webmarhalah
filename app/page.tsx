@@ -188,7 +188,10 @@ export default function HomePage() {
         <AboutSection />
       </Box>
       {/* ── PANGGUNG GEMBIRA ── */}
-      <PanggungGembira />
+      <Box as="section" id="pg" className="w-full">
+              <PanggungGembira />
+      </Box>
+      
       <Box as="section" id="events" className="w-full">
         <EventSection />
       </Box>
