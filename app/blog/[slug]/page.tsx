@@ -1,4 +1,4 @@
-import { client } from "../../../a/__generated__/client";
+import { client } from "../../../tina/__generated__/client";
 import { notFound } from "next/navigation";
 import BlogPostClient from "./blog-post-client";
 
