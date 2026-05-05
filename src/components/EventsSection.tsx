@@ -58,7 +58,16 @@ export default function EventSection({
     data,
   });
 
-  const events = tinaData.eventConnection.edges.map((edge: any) => edge.node);
+  const events = tinaData.eventConnection.edges?.map((edge: any) => edge.node) || [];
+  
+  if (events.length === 0) {
+    return (
+      <Box as="section" id="events" className="py-20 text-center bg-[#FDF9F0]">
+        <p className="text-gold-dark/50 italic">No events found at the moment.</p>
+      </Box>
+    );
+  }
+
   const featured = events.find((e: any) => e.featured) || events[0];
   const rest = events.filter((e: any) => e !== featured);
   return (

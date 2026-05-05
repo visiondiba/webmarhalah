@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { client } from '../tina/__generated__/client'
 
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://imperviousgeneration.my.id'
 
@@ -9,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (process.env.TINA_TOKEN) {
     try {
       const events = await client.queries.eventConnection()
-      eventRoutes = events.data.eventConnection.edges?.map((edge) => ({
+      eventRoutes = events.data.eventConnection.edges?.map((edge: any) => ({
         url: `${baseUrl}/blog/${edge?.node?._sys.filename}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
