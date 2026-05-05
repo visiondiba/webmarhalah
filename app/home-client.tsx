@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Box from "@/components/Box";
 import { Button } from "@/components/ui/button";
 import AboutSection from "@/components/AboutSection";
@@ -9,6 +10,7 @@ import MascotSection from "@/components/MascotSection";
 import KetuaSection from "@/components/KetuaSection";
 import EventSection from "@/components/EventsSection";
 import PanggungGembira from "@/components/PanggungGembira";
+
 
 const ease = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -34,17 +36,22 @@ export default function HomeClient(props: {
         className="relative w-full min-h-screen bg-gold-dark overflow-hidden"
       >
         {/* Background photo dengan vignette mask */}
-        <div
-          className="absolute inset-0 pointer-events-none"
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-20"
           style={{
-            backgroundImage: `url('/assets/images/bg_hero.jpg')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
             maskImage: `radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%)`,
             WebkitMaskImage: `radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%)`,
-            opacity: 0.2, // sesuaikan 0.1 - 0.4
           }}
-        />
+        >
+          <Image
+            src="/assets/images/bg_hero.jpg"
+            alt="Hero Background"
+            fill
+            priority
+            className="object-cover object-center"
+          />
+        </div>
+
 
         {/* Diagonal lines texture */}
         <div
@@ -90,14 +97,16 @@ export default function HomeClient(props: {
             animate="show"
             className="mb-2"
           >
-            <img
+            <Image
               src="/assets/images/lambang.webp"
               width={240}
               height={320}
               alt="Lambang Generasi"
+              priority
               className="w-100 h-auto sm:w-64 md:w-72 object-contain"
               style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.4))" }}
             />
+
           </motion.div>
 
           {/* Eyebrow */}

@@ -22,11 +22,11 @@ export async function generateMetadata({
       relativePath: `${slug}.mdx`,
     });
     return {
-      title: `${post.data.event.title} — Webmarhalah`,
+      title: `${post.data.event.title} — Impervious Media`,
       description: post.data.event.desc ?? "",
     };
   } catch {
-    return { title: "Blog — Webmarhalah" };
+    return { title: "Blog — Impervious Media" };
   }
 }
 
