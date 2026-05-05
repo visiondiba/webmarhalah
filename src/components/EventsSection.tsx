@@ -3,8 +3,9 @@
 
 import Image from "next/image";
 import Box from "./Box";
+import Link from "next/link";
 import { motion, cubicBezier } from "framer-motion";
-import data from "@/content/events.json";
+import { useTina } from "tinacms/dist/react";
 
 const ease = cubicBezier(0.22, 1, 0.36, 1);
 
@@ -42,10 +43,24 @@ function GlitchText({
   );
 }
 
-const featured = data.find((e) => e.featured)!;
-const rest = data.filter((e) => !e.featured);
+export default function EventSection({
+  data,
+  query,
+  variables,
+}: {
+  data: any;
+  query: string;
+  variables: any;
+}) {
+  const { data: tinaData } = useTina({
+    query,
+    variables,
+    data,
+  });
 
-export default function EventSection() {
+  const events = tinaData.eventConnection.edges.map((edge: any) => edge.node);
+  const featured = events.find((e: any) => e.featured) || events[0];
+  const rest = events.filter((e: any) => e !== featured);
   return (
     <Box
       as="section"
@@ -104,9 +119,9 @@ export default function EventSection() {
       {/* Bento grid */}
       <div className="px-10 md:px-16 pb-16 grid grid-cols-1 md:grid-cols-3 gap-3">
 
-        {/* Featured — full left column */}
+        <Link href={`/blog/${featured._sys?.filename}`} className="block md:col-span-2">
         <motion.div
-          className="relative md:col-span-2 rounded-2xl overflow-hidden cursor-pointer group"
+          className="relative rounded-2xl overflow-hidden cursor-pointer group"
           style={{ minHeight: 520 }}
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -117,8 +132,8 @@ export default function EventSection() {
           {/* Image */}
           <div className="absolute inset-0">
             <Image
-              src={featured.image}
-              alt={featured.title}
+              src={featured.image || "/assets/images/bg_hero.jpg"}
+              alt={featured.title || "Featured Event"}
               fill
               className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
@@ -187,14 +202,14 @@ export default function EventSection() {
             </GlitchText>
           </div>
         </motion.div>
+        </Link>
 
         {/* Right column — 4 small cards */}
         <div className="flex flex-col gap-3">
-          {rest.map((event, i) => (
+          {rest.map((event: any, i: number) => (
+            <Link key={event._sys?.filename || i} href={`/blog/${event._sys?.filename}`} className="flex-1" style={{ minHeight: 120 }}>
             <motion.div
-              key={event.id}
-              className="relative rounded-xl overflow-hidden cursor-pointer group flex-1"
-              style={{ minHeight: 120 }}
+              className="relative rounded-xl overflow-hidden cursor-pointer group h-full w-full"
               initial={{ opacity: 0, x: 24 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -204,8 +219,8 @@ export default function EventSection() {
               {/* Image */}
               <div className="absolute inset-0">
                 <Image
-                  src={event.image}
-                  alt={event.title}
+                  src={event.image || "/assets/images/bg_hero.jpg"}
+                  alt={event.title || "Event"}
                   fill
                   className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
@@ -264,6 +279,7 @@ export default function EventSection() {
                 style={{ background: "#B8873A60" }}
               />
             </motion.div>
+            </Link>
           ))}
         </div>
       </div>

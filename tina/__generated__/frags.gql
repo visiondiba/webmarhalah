@@ -1,0 +1,9 @@
+fragment EventParts on Event {
+  __typename
+  title
+  date
+  image
+  featured
+  desc
+  body
+}

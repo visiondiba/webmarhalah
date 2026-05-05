@@ -98,10 +98,9 @@ export default function RootLayout({
       )}
     >
       <body className="font-sans antialiased">
-            <LoadingScreen />
-            {children}
-            <Footer />
-
+          <LoadingScreen />
+          {children}
+          <Footer />
       </body>
     </html>
   );
